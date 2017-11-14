@@ -21,13 +21,9 @@ public class ClientServiceImpl implements ClientService{
 
 	@Override
 	public String inscriptSession(String sessionId, Client client) {
-		CourseSession session = new CourseSession();
-		try{
-			session.setId(Integer.parseInt(sessionId));
-		} catch (NumberFormatException ex){
-			return "Invalid course session Id";
-		}
-		client.setSession(session);
+		CourseSession courseSession = new CourseSession();
+		courseSession.setId(Integer.parseInt(sessionId));
+		client.setSession(courseSession);
 		return clientRepository.saveInscription(client);
 	}
 	
