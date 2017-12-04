@@ -1,6 +1,7 @@
 package com.utbm.lo54.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.websocket.server.PathParam;
@@ -20,33 +21,35 @@ import org.springframework.web.servlet.ModelAndView;
 import com.utbm.lo54.entity.Client;
 import com.utbm.lo54.entity.CourseSession;
 import com.utbm.lo54.service.ClientService;
+import com.utbm.lo54.service.SessionService;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
-/** 
-* @author Dachen Li
-* @date Nov 10, 2017 10:28:02 AM 
-* 
-*/
+/**
+ * @author Dachen Li
+ * @date Nov 10, 2017 10:28:02 AM
+ * 
+ */
 
 @Controller
 public class ClientController {
-	
+
 	@Autowired
-	private ClientService clientServices; 
-	
+	private ClientService clientServices;
+	@Autowired
+	private SessionService sessionService;
+
 	@GetMapping(value = "/inscription/{sessionId}")
-	public ModelAndView goInscript(@PathVariable("sessionId") String sessionId){
+	public ModelAndView goInscript(@PathVariable("sessionId") String sessionId) {
 		Map<String, String> map = new HashMap<>();
 		map.put("sessionId", sessionId);
 		return new ModelAndView("inscript", map);
 	}
-	
+
 	@PostMapping(value = "/inscription")
 	@ResponseBody
-	public Client inscriptCourse(@RequestParam("sessionId") String sessionId,
-			                                              Client client){
-		clientServices.inscriptSession(sessionId,client);
+	public Client inscriptCourse(@RequestParam("sessionId") String sessionId, Client client) {
+		clientServices.inscriptSession(sessionId, client);
 		return client;
 	}
 
